@@ -1,9 +1,7 @@
 // Default Modules
+import { exec } from 'node:child_process'
 // Modules
-import meditation from '#meditation'
-
-// Constants
-const { prettier } = meditation.script
+import { prettier } from '#src/helpers'
 
 // Prettify
 prettier()

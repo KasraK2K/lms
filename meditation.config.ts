@@ -1,5 +1,4 @@
 // Default Modules
-import { exec } from 'node:child_process'
 import { resolve } from 'node:path'
 
 const { NODE_ENV = 'development' } = process.env
@@ -8,11 +7,6 @@ const meditationConfig = {
 	name: 'meditation',
 	port: NODE_ENV === 'production' ? 4000 : 3000,
 	boot: [],
-	script: {
-		prettier: () => exec('prettier --write .'),
-		mkDir: (path: string) => exec(`mkdir -p ${path}`),
-		mkFile: (path: string) => exec(`mkdir -p ${path.substring(0, path.lastIndexOf('/'))} && touch ${path}`),
-	},
 	config: {
 		active_databases: ['mysql'],
 		database: {
