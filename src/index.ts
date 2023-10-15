@@ -1,7 +1,17 @@
-import { Elysia } from "elysia";
+// Bootstrap
+import '#bootstrap'
+// Dependencies
+import { Elysia } from 'elysia'
+import { swagger } from '@elysiajs/swagger'
+// Modules
+import routes from '#routes'
+import meditation from '#meditation'
 
-const app = new Elysia().get("/", () => "Hello Elysia").listen(3000);
+const app = new Elysia()
+	// Swagger
+	.use(swagger())
+	// Middleware
+	.use(routes)
+	.listen(meditation.port)
 
-console.log(
-  `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`
-);
+console.log(`🍀 Meditation is running at ${app.server?.hostname}:${app.server?.port}`)
