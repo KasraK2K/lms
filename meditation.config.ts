@@ -1,5 +1,5 @@
 // Default Modules
-import { resolve } from 'node:path'
+import { resolve } from 'path'
 
 const { NODE_ENV = 'development' } = process.env
 
