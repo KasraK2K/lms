@@ -2,6 +2,7 @@
 import { Sequelize } from 'sequelize'
 // Modules
 import meditation from '#meditation'
+import { Databases } from '#src/types/general.enum'
 
 const { postgres: postgresConfig } = meditation.config.database
 const { active_databases } = meditation.config
@@ -13,7 +14,7 @@ export const postgres = new Sequelize(postgresConfig.database, postgresConfig.us
 	logging: false,
 })
 
-if (active_databases.includes('postgres'))
+if (active_databases.includes(Databases.POSTGRES))
 	try {
 		await postgres.authenticate()
 		console.log('postgres is connected.')

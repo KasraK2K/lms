@@ -2,6 +2,7 @@
 import { Sequelize } from 'sequelize'
 // Modules
 import meditation from '#meditation'
+import { Databases } from '#src/types/general.enum'
 
 const { mysql: mysqlConfig } = meditation.config.database
 const { active_databases } = meditation.config
@@ -13,7 +14,7 @@ export const mysql = new Sequelize(mysqlConfig.database, mysqlConfig.user, mysql
 	logging: false,
 })
 
-if (active_databases.includes('mysql'))
+if (active_databases.includes(Databases.MYSQL))
 	try {
 		await mysql.authenticate()
 		console.log('mysql is connected.')

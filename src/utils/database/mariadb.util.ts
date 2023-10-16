@@ -2,6 +2,7 @@
 import { Sequelize } from 'sequelize'
 // Modules
 import meditation from '#meditation'
+import { Databases } from '#src/types/general.enum'
 
 const { mariadb: mariadbConfig } = meditation.config.database
 const { active_databases } = meditation.config
@@ -13,7 +14,7 @@ export const mariadb = new Sequelize(mariadbConfig.database, mariadbConfig.user,
 	logging: false,
 })
 
-if (active_databases.includes('mariadb'))
+if (active_databases.includes(Databases.MARIADB))
 	try {
 		await mariadb.authenticate()
 		console.log('mariadb is connected.')
