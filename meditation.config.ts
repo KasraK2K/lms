@@ -1,14 +1,18 @@
 // Default Modules
 import { resolve } from 'path'
+// Modules
+import { Databases } from '#src/types/general.enum'
+import { IMeditationConfig } from '#src/types/config.interface'
 
 const { NODE_ENV = 'development' } = process.env
 
-const meditationConfig = {
+const meditationConfig: IMeditationConfig = {
 	name: 'meditation',
 	port: NODE_ENV === 'production' ? 4000 : 3000,
 	boot: [],
 	config: {
-		active_databases: ['mysql'],
+		default_engine: Databases.SQLITE,
+		active_databases: [Databases.SQLITE],
 		database: {
 			mysql: {
 				host: 'localhost',
