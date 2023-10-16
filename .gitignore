@@ -43,5 +43,5 @@ package-lock.json
 
 # Kasra
 .vscode/
-
+database/
 bun.lockb
