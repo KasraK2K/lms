@@ -22,16 +22,11 @@ export interface IUser {
 	last_login_at?: string
 }
 
-export interface IUserFindByEmail {
-	email: string
-}
+export type IUserFillable = Pick<IUser, 'first_name' | 'surname' | 'contact_number' | 'email' | 'password' | 'is_active'>
 
-export interface IUserFindById {
-	id: number
-}
+export type IUserGuarded = Omit<
+	IUser,
+	'id' | 'last_token' | 'verify_token' | 'role' | 'is_verify' | 'is_archive' | 'is_block' | 'created_at' | 'updated_at' | 'archived_at'
+>
 
-export type IUserFindArgs = IUserFindByEmail | IUserFindById
-
-export type IOmittedUser = Omit<IUser, 'password' | 'last_token' | 'verify_token'>
-
-export type IUserGuarded = Pick<IUser, 'first_name' | 'surname' | 'contact_number' | 'email' | 'password' | 'is_active'>
+// export type IUserFindArgs = { email: string } | { id: number }

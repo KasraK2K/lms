@@ -1,49 +1,36 @@
 // Dependencies
-import { FieldPacket, QueryError } from 'mysql2'
 import _ from 'lodash'
 // Modules
 import Repository from '#base/Repository'
-import { mysql } from '#src/utils'
-import { IUser, IUserFindArgs, IUserGuarded } from './types/user.interface'
+import { User, engine } from '#src/models'
+import { IUserFillable, IUserGuarded } from './types/user.interface'
 
 class UserRepository extends Repository {
-	private tableName: string = 'users'
+	private tableName = User.tableName
 
-	health(args: IUserFindArgs) {
-		return args
+	async count() {
+		const [result, _metadata] = (await engine.query(`SELECT COUNT(*) AS count from ${this.tableName}`)) as [[{ count: number }], unknown]
+		return result[0].count
 	}
 
-	findAll(): Promise<IUser[]> {
-		return new Promise((resolve, reject) => {
-			mysql.execute(/* SQL */ `SELECT * FROM ${this.tableName}`, (err: QueryError | null, results: IUser[], _fields: FieldPacket[]) => {
-				if (err) reject(err)
-				else resolve(results)
-			})
-		})
+	async findAll(): Promise<User[]> {
+		return await User.findAll()
 	}
 
-	insert(args: IUserGuarded) {
-		return new Promise((resolve, reject) => {
-			let query = `INSERT INTO ${this.tableName} (`
-			const actions: string[] = []
-			const values: any[] = []
+	async findOne(id: number): Promise<User | null> {
+		return await User.findByPk(id)
+	}
 
-			for (const key in args) {
-				actions.push(key)
-				values.push((args as any)[key])
-			}
+	async create(args: IUserFillable & { last_token: string; verify_token: string }): Promise<User> {
+		return await User.create(args)
+	}
 
-			actions.push('verify_token')
-			values.push('fake_verify_token')
+	async update(values: IUserGuarded, id: number): Promise<[affectedCount: number]> {
+		return await User.update(values, { where: { id } })
+	}
 
-			query += actions.join(', ')
-			query += `) VALUES (${Array(values.length).fill('?').join(', ')})`
-
-			mysql.execute<any>(query, values, (err: QueryError | null, result: any, _fields: FieldPacket[]) => {
-				if (err) reject(err)
-				else resolve(result)
-			})
-		})
+	async destroy(id: number): Promise<number> {
+		return await User.destroy({ where: { id }, force: false })
 	}
 }
 

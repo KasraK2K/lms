@@ -1,19 +1,36 @@
 // Modules
 import Controller from '#base/Controller'
-import { IUserFindArgs, IUserGuarded } from './types/user.interface'
+import { User } from '#src/models'
+import { IUserFillable, IUserGuarded } from './types/user.interface'
 import service from './user.service'
 
 class UserController extends Controller {
-	health(body: IUserFindArgs) {
-		return service.health(body)
+	async count() {
+		return await service.count()
 	}
 
-	findAll() {
+	findAll(): Promise<User[]> {
 		return service.findAll()
 	}
 
-	insert(args: IUserGuarded) {
-		return service.insert(args)
+	findOne(id: number): Promise<User | null> {
+		return service.findOne(id)
+	}
+
+	create(values: IUserFillable): Promise<User> {
+		return service.create(values)
+	}
+
+	update(values: IUserGuarded, id: number): Promise<[affectedCount: number]> {
+		return service.update(values, id)
+	}
+
+	upsert(values: IUserFillable & { id?: number }): Promise<User | null> {
+		return service.upsert(values)
+	}
+
+	destroy(id: number): Promise<number> {
+		return service.destroy(id)
 	}
 }
 

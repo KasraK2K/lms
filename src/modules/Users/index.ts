@@ -5,9 +5,15 @@ import controller from './user.controller'
 import schemaTypes from './types/schema.type'
 
 const routes = new Elysia({ prefix: '/users' })
-	// health
-	.post('/health', ({ body }) => controller.health(body), schemaTypes.health)
-	.get('/find-all', () => controller.findAll())
-	.post('/insert', ({ body }) => controller.insert(body), schemaTypes.insert)
+	.onAfterHandle((context) => {
+		context.response = { result: context.response }
+	})
+	.all('/count', ({ params }) => controller.count())
+	.get('/', () => controller.findAll())
+	.get('/:id', ({ params }) => controller.findOne(params.id), schemaTypes.id)
+	.post('/', ({ body }) => controller.create(body), schemaTypes.create)
+	.put('/', ({ body }) => controller.upsert(body), schemaTypes.upsert)
+	.patch('/:id', ({ params, body }) => controller.update(body, params.id), schemaTypes.update)
+	.delete('/:id', ({ params }) => controller.destroy(params.id), schemaTypes.id)
 
 export default routes
