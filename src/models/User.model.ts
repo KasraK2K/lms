@@ -5,15 +5,40 @@ import { engine } from '#models/index'
 
 class User extends Model {
 	declare first_name: string
-	declare last_name: string
+	declare surname: string
 }
 
+// prettier-ignore
 User.init(
 	{
-		first_name: { type: DataTypes.STRING, defaultValue: '' },
-		last_name: { type: DataTypes.STRING, defaultValue: '' },
+		id:				{ type: DataTypes.INTEGER,	autoIncrement: true,	primaryKey: true },
+		first_name:		{ type: DataTypes.STRING,	defaultValue: '' },
+		surname:		{ type: DataTypes.STRING,	defaultValue: '' },
+		contact_number:	{ type: DataTypes.STRING,	defaultValue: '' },
+
+		email:			{ type: DataTypes.STRING,	allowNull: false },
+		password:		{ type: DataTypes.STRING,	allowNull: false },
+		last_token:		{ type: DataTypes.STRING,	allowNull: false },
+		verify_token:	{ type: DataTypes.STRING,	allowNull: false },
+
+		role:			{ type: DataTypes.INTEGER,	defaultValue: 1 },
+
+		is_active:		{ type: DataTypes.BOOLEAN,	defaultValue: true },
+		is_verify:		{ type: DataTypes.BOOLEAN,	defaultValue: false },
+		is_archive:		{ type: DataTypes.BOOLEAN,	defaultValue: false },
+		is_block:		{ type: DataTypes.BOOLEAN,	defaultValue: false },
+
+		last_login_at: { type: DataTypes.DATE },
 	},
-	{ sequelize: engine, timestamps: true, modelName: 'User', tableName: 'users', underscored: true, paranoid: true }
+	{
+		sequelize: engine,
+		timestamps: true,
+		underscored: true,
+		paranoid: true,
+		modelName: 'User',
+		tableName: 'users',
+		deletedAt: 'archiveAt',
+	}
 )
 
 export { User }
