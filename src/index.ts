@@ -10,7 +10,10 @@ import meditation from '#meditation'
 const app = new Elysia()
 	// Swagger
 	.use(swagger())
-	// Middleware
+	// Routes
+	.onAfterHandle((context) => {
+		context.response = { result: context.response }
+	})
 	.use(routes)
 	.listen(meditation.port)
 

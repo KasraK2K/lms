@@ -5,10 +5,7 @@ import controller from './user.controller'
 import schemaTypes from './types/schema.type'
 
 const routes = new Elysia({ prefix: '/users' })
-	.onAfterHandle((context) => {
-		context.response = { result: context.response }
-	})
-	.all('/count', ({ params }) => controller.count())
+	.all('/count', () => controller.count())
 	.get('/', () => controller.findAll())
 	.get('/:id', ({ params }) => controller.findOne(params.id), schemaTypes.id)
 	.post('/', ({ body }) => controller.create(body), schemaTypes.create)
