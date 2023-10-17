@@ -1,5 +1,5 @@
 // Modules
-import { prettier } from '#src/helpers'
+import { prettier } from '#helpers/index'
 
 // Prettify
 prettier()

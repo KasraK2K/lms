@@ -2,7 +2,7 @@
 import mysql2 from 'mysql2'
 // Modules
 import meditation from '#meditation'
-import { Databases } from '#src/types/general.enum'
+import { Databases } from '#src/types/enums/general.enum'
 
 const { mysql: mysqlConfig } = meditation.config.database
 const { active_databases } = meditation.config

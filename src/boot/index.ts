@@ -1,2 +1,2 @@
 import '#script'
-import '#src/models/index'
+import '#models/index'

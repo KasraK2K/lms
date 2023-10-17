@@ -1,8 +1,8 @@
 // Default Modules
 import { resolve } from 'path'
 // Modules
-import { Databases } from '#src/types/general.enum'
-import { IMeditationConfig } from '#src/types/config.interface'
+import { Databases } from '#types/enums/general.enum'
+import { IMeditationConfig } from '#types/interfaces/config.interface'
 
 const { NODE_ENV = 'development' } = process.env
 

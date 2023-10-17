@@ -2,7 +2,7 @@
 
 // Modules
 import meditation from '#meditation'
-import { Databases } from '#src/types/general.enum'
+import { Databases } from '#types/enums/general.enum'
 import { sqlite, mysql, mariadb, postgres } from '#utils/index'
 
 const engines = {
