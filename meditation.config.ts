@@ -11,7 +11,7 @@ const meditationConfig: IMeditationConfig = {
 	port: NODE_ENV === 'production' ? 4000 : 3000,
 	boot: [],
 	config: {
-		default_engine: Databases.SQLITE,
+		default_database: Databases.SQLITE,
 		active_databases: [Databases.SQLITE],
 		database: {
 			mysql: {

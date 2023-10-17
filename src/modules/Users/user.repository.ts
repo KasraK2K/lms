@@ -2,7 +2,7 @@
 import _ from 'lodash'
 // Modules
 import Repository from '#base/Repository'
-import { User, engine } from '#models/index'
+import { User, defaultDatabase } from '#models/index'
 import { IPagination } from '#types/interfaces'
 import { IUserFillable, IUserGuarded } from './types/user.interface'
 
@@ -10,7 +10,7 @@ class UserRepository extends Repository {
 	private tableName = User.tableName
 
 	async count() {
-		const [result, _metadata] = (await engine.query(`SELECT COUNT(*) AS count from ${this.tableName}`)) as [[{ count: number }], unknown]
+		const [result, _metadata] = (await defaultDatabase.query(`SELECT COUNT(*) AS count from ${this.tableName}`)) as [[{ count: number }], unknown]
 		return result[0].count
 	}
 

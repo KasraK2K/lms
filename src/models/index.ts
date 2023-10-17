@@ -2,13 +2,12 @@
 import meditation from '#meditation'
 import { Databases } from '#types/enums/general.enum'
 import { sqlite, mysql, mariadb, postgres } from '#utils/index'
-import { engine } from './engine'
 
 const { sqlite: sqliteConfig, mysql: mysqlConfig, mariadb: mariadbConfig, postgres: postgresConfig } = meditation.config.database
 const { active_databases } = meditation.config
 
 // Exporters
-export { engine }
+export * from './database'
 export * from './User.model'
 
 // sqlite

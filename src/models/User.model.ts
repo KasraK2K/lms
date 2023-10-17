@@ -1,7 +1,7 @@
 // Dependencies
 import { DataTypes, Model } from 'sequelize'
 // Modules
-import { engine } from '#models/index'
+import { defaultDatabase } from '#models/index'
 
 class User extends Model {
 	declare first_name: string
@@ -29,7 +29,7 @@ User.init(
 		last_login_at: { type: DataTypes.DATE },
 	},
 	{
-		sequelize: engine,
+		sequelize: defaultDatabase,
 		timestamps: true,
 		underscored: true,
 		paranoid: true,

@@ -6,7 +6,7 @@ export interface IMeditationConfig {
 	port: number
 	boot: string[]
 	config: {
-		default_engine: Databases
+		default_database: Databases
 		active_databases: Databases[]
 		database: IDatabaseConfig
 	}
