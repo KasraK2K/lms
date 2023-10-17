@@ -1,12 +1,17 @@
 // Modules
 import Controller from '#base/Controller'
-import { User } from '#src/models'
+import { User } from '#models/index'
+import { IPagination } from '#types/interfaces'
 import { IUserFillable, IUserGuarded } from './types/user.interface'
 import service from './user.service'
 
 class UserController extends Controller {
 	async count() {
 		return await service.count()
+	}
+
+	async pagination(page: number, limit: number): Promise<IPagination<User>> {
+		return service.pagination(page, limit)
 	}
 
 	findAll(): Promise<User[]> {

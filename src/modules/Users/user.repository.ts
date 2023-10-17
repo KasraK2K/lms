@@ -2,7 +2,8 @@
 import _ from 'lodash'
 // Modules
 import Repository from '#base/Repository'
-import { User, engine } from '#src/models'
+import { User, engine } from '#models/index'
+import { IPagination } from '#types/interfaces'
 import { IUserFillable, IUserGuarded } from './types/user.interface'
 
 class UserRepository extends Repository {
@@ -11,6 +12,18 @@ class UserRepository extends Repository {
 	async count() {
 		const [result, _metadata] = (await engine.query(`SELECT COUNT(*) AS count from ${this.tableName}`)) as [[{ count: number }], unknown]
 		return result[0].count
+	}
+
+	async pagination(page: number, limit: number): Promise<IPagination<User>> {
+		const { rows, count } = await User.findAndCountAll({ offset: (page - 1) * limit, limit })
+		let total_pages = Math.floor(count / limit)
+		if (count % limit > 0) total_pages += 1
+		return {
+			rows,
+			count,
+			page,
+			total_pages,
+		}
 	}
 
 	async findAll(): Promise<User[]> {

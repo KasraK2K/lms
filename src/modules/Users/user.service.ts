@@ -2,13 +2,18 @@
 import _ from 'lodash'
 // Modules
 import Service from '#base/Service'
-import { User } from '#src/models'
+import { User } from '#models/index'
+import { IPagination } from '#types/interfaces'
 import repository from './user.repository'
 import { IUserFillable, IUserGuarded } from './types/user.interface'
 
 class UserService extends Service {
-	async count() {
-		return await repository.count()
+	count() {
+		return repository.count()
+	}
+
+	async pagination(page: number, limit: number): Promise<IPagination<User>> {
+		return repository.pagination(page, limit)
 	}
 
 	findAll(): Promise<User[]> {

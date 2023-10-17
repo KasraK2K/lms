@@ -6,6 +6,7 @@ import schemaTypes from './types/schema.type'
 
 const routes = new Elysia({ prefix: '/users' })
 	.all('/count', () => controller.count())
+	.get('/pagination/:page/:limit', ({ params: { page, limit } }) => controller.pagination(page, limit), schemaTypes.pagination)
 	.get('/', () => controller.findAll())
 	.get('/:id', ({ params }) => controller.findOne(params.id), schemaTypes.id)
 	.post('/', ({ body }) => controller.create(body), schemaTypes.create)

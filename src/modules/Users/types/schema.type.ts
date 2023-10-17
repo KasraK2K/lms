@@ -11,6 +11,18 @@ const types = {
 			if (!isNaN(id)) params.id = id
 		},
 	},
+	pagination: {
+		params: t.Object({
+			page: t.Integer(),
+			limit: t.Integer(),
+		}),
+		transform({ params }: { params: Record<'page' | 'limit', string | number> }) {
+			const page = +params.page
+			const limit = +params.limit
+			if (!isNaN(page)) params.page = page
+			if (!isNaN(limit)) params.limit = limit
+		},
+	},
 	create: {
 		body: t.Object({
 			first_name: t.Optional(t.String()),
