@@ -18,8 +18,6 @@ User.init(
 
 		email:			{ type: DataTypes.STRING,	allowNull: false },
 		password:		{ type: DataTypes.STRING,	allowNull: false },
-		last_token:		{ type: DataTypes.STRING,	allowNull: false },
-		verify_token:	{ type: DataTypes.STRING,	allowNull: false },
 
 		role:			{ type: DataTypes.INTEGER,	defaultValue: 1 },
 

@@ -34,7 +34,7 @@ class UserRepository extends Repository {
 		return await User.findByPk(id)
 	}
 
-	async create(args: IUserFillable & { last_token: string; verify_token: string }): Promise<User> {
+	async create(args: IUserFillable): Promise<User> {
 		return await User.create(args)
 	}
 

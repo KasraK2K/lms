@@ -6,11 +6,11 @@ import { IUserFillable, IUserGuarded } from './types/user.interface'
 import service from './user.service'
 
 class UserController extends Controller {
-	async count() {
-		return await service.count()
+	count() {
+		return service.count()
 	}
 
-	async pagination(page: number, limit: number): Promise<IPagination<User>> {
+	pagination(page: number, limit: number): Promise<IPagination<User>> {
 		return service.pagination(page, limit)
 	}
 

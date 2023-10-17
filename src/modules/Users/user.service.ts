@@ -12,7 +12,7 @@ class UserService extends Service {
 		return repository.count()
 	}
 
-	async pagination(page: number, limit: number): Promise<IPagination<User>> {
+	pagination(page: number, limit: number): Promise<IPagination<User>> {
 		return repository.pagination(page, limit)
 	}
 
@@ -25,12 +25,7 @@ class UserService extends Service {
 	}
 
 	create(values: IUserFillable): Promise<User> {
-		const newValues: IUserFillable & { last_token: string; verify_token: string } = {
-			...values,
-			last_token: 'last-token',
-			verify_token: 'verify-token',
-		}
-		return repository.create(newValues)
+		return repository.create(values)
 	}
 
 	update(values: IUserGuarded, id: number): Promise<[affectedCount: number]> {
@@ -43,7 +38,7 @@ class UserService extends Service {
 		if (id) {
 			repository.update(values, id)
 			return repository.findOne(id)
-		} else return repository.create({ ...values, last_token: 'last-token', verify_token: 'verify-token' })
+		} else return repository.create(values)
 	}
 
 	destroy(id: number): Promise<number> {
