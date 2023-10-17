@@ -1,5 +1,5 @@
 // Modules
-import { Databases } from './general.enum'
+import { Databases } from '#types/enums'
 
 export interface IMeditationConfig {
 	name: string
