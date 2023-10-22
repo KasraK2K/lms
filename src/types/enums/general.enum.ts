@@ -4,3 +4,7 @@ export enum Databases {
 	MARIADB = 'mariadb',
 	POSTGRES = 'postgres',
 }
+
+export enum SwaggerTags {
+	USER = 'User',
+}
