@@ -2,24 +2,20 @@
 import { Elysia } from 'elysia'
 // Modules
 import controller from './user.controller'
-import schemaTypes from './types/schema.type'
+import { CountDTO, PaginationDTO, FindAllDTO, FindOneDTO, CreateDTO, UpsertDTO, UpdateDTO, DeleteDTO } from './types/schema.type'
 
-const routes = new Elysia({ prefix: '/users' })
+// prettier-ignore
+const routes = new Elysia()
 	/* ---------------------------------- Rest ---------------------------------- */
-	.all('/count', () => controller.count())
-	.get('/pagination/:page/:limit', ({ params: { page, limit } }) => controller.pagination(page, limit), schemaTypes.pagination)
-	.get('/', () => controller.findAll())
-	.get('/:id', ({ params }) => controller.findOne(params.id), schemaTypes.id)
-	.post('/', ({ body }) => controller.create(body), schemaTypes.create)
-	.put('/', ({ body }) => controller.upsert(body), schemaTypes.upsert)
-	.patch('/:id', ({ params, body }) => controller.update(body, params.id), schemaTypes.update)
-	.delete('/:id', ({ params }) => controller.destroy(params.id), schemaTypes.id)
+	.get('/count',						() => controller.count(),												CountDTO)
+	.get('/pagination/:page/:limit',	({ params: { page, limit } }) => controller.pagination(page, limit),	PaginationDTO)
+	.get('/',							() => controller.findAll(),												FindAllDTO)
+	.get('/:id',						({ params }) => controller.findOne(params.id),							FindOneDTO)
+	.post('/',							({ body }) => controller.create(body),									CreateDTO)
+	.put('/',							({ body }) => controller.upsert(body),									UpsertDTO)
+	.patch('/:id',						({ params, body }) => controller.update(body, params.id),				UpdateDTO)
+	.delete('/:id',						({ params }) => controller.destroy(params.id),							DeleteDTO)
 	/* ------------------------------- Web Socket ------------------------------- */
-	.ws('/ws-create', {
-		...schemaTypes.create,
-		async message(ws, message) {
-			ws.send(await controller.create(message))
-		},
-	})
+	.ws('/ws-create', { ...CreateDTO, async message(ws, message) { ws.send(await controller.create(message)) }})
 
 export default routes
