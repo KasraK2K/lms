@@ -4,8 +4,20 @@ import { DataTypes, Model } from 'sequelize'
 import { defaultDatabase } from '#models/index'
 
 class User extends Model {
+	declare id: number
 	declare first_name: string
 	declare surname: string
+	declare email: string
+	declare password: string
+	declare role: number
+	declare is_active: number
+	declare is_verify: number
+	declare is_archive: number
+	declare is_block: number
+	declare last_login_at: number
+	declare createdAt: Date
+	declare updatedAt: Date
+	declare archiveAt: Date
 }
 
 // prettier-ignore
