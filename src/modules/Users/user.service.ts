@@ -6,9 +6,10 @@ import { User } from '#models/index'
 import { IPagination } from '#types/interfaces'
 import repository from './user.repository'
 import { IUserFillable, IUserGuarded } from './types/user.interface'
+import { hashGenerator } from '#src/utils'
 
 class UserService extends Service {
-	count() {
+	count(): Promise<number> {
 		return repository.count()
 	}
 
@@ -24,16 +25,19 @@ class UserService extends Service {
 		return repository.findOne(id)
 	}
 
-	create(values: IUserFillable): Promise<User> {
+	async create(values: IUserFillable): Promise<User> {
+		values.password = await hashGenerator(values.password)
 		return repository.create(values)
 	}
 
-	update(values: IUserGuarded, id: number): Promise<[affectedCount: number]> {
+	async update(values: IUserGuarded, id: number): Promise<[affectedCount: number]> {
+		if ('password' in values) values.password = await hashGenerator(values.password)
 		return repository.update(values, id)
 	}
 
-	upsert(values: IUserFillable & { id?: number }): Promise<User | null> {
+	async upsert(values: IUserFillable & { id?: number }): Promise<User | null> {
 		const { id } = values
+		if ('password' in values) values.password = await hashGenerator(values.password)
 		values = _.omit(values, ['id'])
 		if (id) {
 			repository.update(values, id)
