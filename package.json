@@ -20,6 +20,7 @@
 		"sqlite3": "^5.1.7"
 	},
 	"devDependencies": {
+		"@types/lodash": "^4.14.202",
 		"bun-types": "latest",
 		"sequelize-cli": "^6.6.1"
 	},

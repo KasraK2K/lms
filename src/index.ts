@@ -11,6 +11,7 @@ const app = new Elysia()
 	// Swagger
 	.use(
 		swagger({
+			path: '/swagger',
 			documentation: {
 				info: { title: 'Meditation Documentation', version: '1.0.0' },
 				tags: [{ name: 'User', description: 'User endpoints' }],
