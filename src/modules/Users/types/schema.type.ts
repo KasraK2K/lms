@@ -2,22 +2,23 @@
 import { t } from 'elysia'
 import { SwaggerTags } from '#types/enums/general.enum'
 
-export const UserDTO = t.Object({
-	id: t.Optional(t.Integer()),
-	first_name: t.Optional(t.String()),
-	surname: t.Optional(t.String()),
-	contact_number: t.Optional(t.String()),
-	email: t.Optional(t.String()),
-	password: t.Optional(t.String()),
-	role: t.Optional(t.Integer()),
-	is_active: t.Optional(t.Boolean()),
-	is_verify: t.Optional(t.Boolean()),
-	is_archive: t.Optional(t.Boolean()),
-	is_block: t.Optional(t.Boolean()),
-	last_login_at: t.Optional(t.Nullable(t.String())),
-	createdAt: t.Optional(t.Date()),
-	updatedAt: t.Optional(t.Date()),
-	archivedAt: t.Optional(t.Nullable(t.String())),
+// prettier-ignore
+export const UserDTO =	t.Object({
+	id:					t.Optional(t.Integer()),
+	first_name:			t.Optional(t.String()),
+	surname:			t.Optional(t.String()),
+	contact_number:		t.Optional(t.String()),
+	email:				t.Optional(t.String()),
+	password:			t.Optional(t.String()),
+	role:				t.Optional(t.Integer()),
+	is_active:			t.Optional(t.Boolean()),
+	is_verify:			t.Optional(t.Boolean()),
+	is_archive:			t.Optional(t.Boolean()),
+	is_block:			t.Optional(t.Boolean()),
+	last_login_at:		t.Optional(t.Nullable(t.String())),
+	createdAt:			t.Optional(t.Date()),
+	updatedAt:			t.Optional(t.Date()),
+	archivedAt:			t.Optional(t.Nullable(t.String())),
 })
 
 export const CountDTO = {
