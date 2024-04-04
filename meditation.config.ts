@@ -8,7 +8,7 @@ const { NODE_ENV = 'development' } = process.env
 
 const meditationConfig: IMeditationConfig = {
 	name: 'meditation',
-	port: NODE_ENV === 'production' ? 4000 : 3000,
+	port: NODE_ENV === 'production' ? 4000 : 3500,
 	boot: [],
 	config: {
 		default_database: Databases.SQLITE,
