@@ -19,9 +19,9 @@ const app = new Elysia({ prefix: '/api' })
 		})
 	)
 	// Routes
-	// .onAfterHandle((context) => {
-	// 	context.response = { result: context.response }
-	// })
+	.onAfterHandle((context) => {
+		context.response = { result: context.response }
+	})
 	.use(routes)
 	.listen(meditation.port)
 
