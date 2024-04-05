@@ -1,5 +1,4 @@
 // Default Modules
-import { resolve } from 'path'
 // Modules
 import { Databases } from '#types/enums/general.enum'
 import { IMeditationConfig } from '#types/interfaces/config.interface'
@@ -11,8 +10,8 @@ const meditationConfig: IMeditationConfig = {
 	port: NODE_ENV === 'production' ? 4000 : 3500,
 	boot: [],
 	config: {
-		default_database: Databases.SQLITE,
-		active_databases: [Databases.SQLITE],
+		default_database: Databases.POSTGRES,
+		active_databases: [Databases.POSTGRES],
 		database: {
 			mysql: {
 				host: 'localhost',
@@ -22,7 +21,7 @@ const meditationConfig: IMeditationConfig = {
 				sync: { force: true },
 			},
 			mongodb: {
-				url: 'mongodb://0.0.0.0:27017',
+				url: 'mongodb://admin:admin@mongo:27017',
 				database: 'meditation',
 				collection: 'default',
 				options: {},
@@ -35,20 +34,13 @@ const meditationConfig: IMeditationConfig = {
 				sync: { force: true },
 			},
 			postgres: {
-				host: '0.0.0.0',
-				user: 'user',
-				database: 'db',
-				password: 'password',
+				host: 'postgres',
+				user: 'postgres',
+				database: 'meditation',
+				password: 'postgres',
 				port: 5432,
 				idleTimeoutMillis: 10000,
 				connectionTimeoutMillis: 10000,
-				sync: { force: true },
-			},
-			sqlite: {
-				storage: resolve(process.cwd(), 'database/database.sqlite'),
-				database: 'db',
-				user: 'user',
-				password: 'password',
 				sync: { force: true },
 			},
 			redis: {

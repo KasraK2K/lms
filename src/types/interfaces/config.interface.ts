@@ -17,7 +17,6 @@ export interface IDatabaseConfig {
 	mongodb: IMongoDBConfig
 	mariadb: IMariaDBConfig
 	postgres: IPostgreSQLConfig
-	sqlite: ISQLiteConfig
 	redis: IRedisConfig
 	ioRedis: IIORedisConfig
 	rabbitMQ: IRabbitMQConfig
@@ -54,14 +53,6 @@ export interface IPostgreSQLConfig {
 	port: number
 	idleTimeoutMillis: number
 	connectionTimeoutMillis: number
-	sync: { force: boolean }
-}
-
-export interface ISQLiteConfig {
-	storage: string
-	database: string
-	user: string
-	password: string
 	sync: { force: boolean }
 }
 

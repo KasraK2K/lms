@@ -1,0 +1,50 @@
+# docker-compose.yml
+version: '3.9'
+
+services:
+    # ---------------------------------- Backend --------------------------------- #
+    backend:
+        image: 'oven/bun:latest'
+        container_name: bun-backend
+        # override default entrypoint allows us to do `bun install` before serving
+        entrypoint: []
+        # execute bun install before we start the dev server in watch mode
+        command: "/bin/sh -c 'bun install && bun run --watch src/index.ts'"
+        # expose the right ports
+        ports: ['3500:3500']
+        # setup a host mounted volume to sync changes to the container
+        volumes: ['./:/home/bun/app']
+        depends_on:
+            - postgres
+            - mongo
+
+    # -------------------------------- PostgreSQL -------------------------------- #
+    postgres:
+        image: postgres:latest
+        container_name: bun-postgres-database
+        restart: unless-stopped
+        deploy:
+            mode: replicated
+            replicas: 1
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=meditation
+        ports:
+            - 5432:5432
+        volumes:
+            - ./backup/pg-data:/var/lib/postgresql/data
+
+    # ---------------------------------- MongoDB --------------------------------- #
+    mongo:
+        image: mongo:latest
+        container_name: bun-mongo-database
+        restart: unless-stopped
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: admin
+        ports:
+            - 27017:27017
+        volumes:
+            - ./backup/db:/data/db
+            - ./backup/logs:/var/log/mongodb

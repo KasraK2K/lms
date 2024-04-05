@@ -7,6 +7,7 @@ class User extends Model {
 	declare id: number
 	declare first_name: string
 	declare surname: string
+	declare contact_number: string
 	declare email: string
 	declare password: string
 	declare role: number

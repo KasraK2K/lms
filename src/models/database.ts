@@ -3,10 +3,9 @@
 // Modules
 import meditation from '#meditation'
 import { Databases } from '#types/enums/general.enum'
-import { sqlite, mysql, mariadb, postgres } from '#utils/index'
+import { mariadb, mysql, postgres } from '#utils/index'
 
 const databases = {
-	[Databases.SQLITE]: sqlite,
 	[Databases.MYSQL]: mysql,
 	[Databases.MARIADB]: mariadb,
 	[Databases.POSTGRES]: postgres,

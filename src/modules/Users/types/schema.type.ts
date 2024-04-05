@@ -1,6 +1,6 @@
 // Dependencies
-import { t } from 'elysia'
 import { SwaggerTags } from '#types/enums/general.enum'
+import { t } from 'elysia'
 
 // prettier-ignore
 export const UserDTO =	t.Object({
@@ -65,14 +65,15 @@ export const FindOneDTO = {
 	},
 }
 
+// prettier-ignore
 export const CreateDTO = {
-	body: t.Object({
-		first_name: t.Optional(t.String()),
-		surname: t.Optional(t.String()),
-		contact_number: t.String(),
-		email: t.String(),
-		password: t.String(),
-		is_active: t.Boolean(),
+	body:				t.Object({
+		first_name:		t.Optional(t.String()),
+		surname:		t.Optional(t.String()),
+		contact_number:	t.String(),
+		email:			t.String(),
+		password:		t.String(),
+		is_active:		t.Boolean(),
 	}),
 	detail: {
 		summary: 'Create new user',
@@ -81,15 +82,16 @@ export const CreateDTO = {
 	},
 }
 
+// prettier-ignore
 export const UpsertDTO = {
-	body: t.Object({
-		id: t.Optional(t.Integer()),
-		first_name: t.Optional(t.String()),
-		surname: t.Optional(t.String()),
-		contact_number: t.String(),
-		email: t.String(),
-		password: t.String(),
-		is_active: t.Boolean(),
+	body:				t.Object({
+		id:				t.Optional(t.Integer()),
+		first_name:		t.Optional(t.String()),
+		surname:		t.Optional(t.String()),
+		contact_number:	t.String(),
+		email:			t.String(),
+		password:		t.String(),
+		is_active:		t.Boolean(),
 	}),
 	detail: {
 		summary: 'Upsert user',
@@ -98,14 +100,15 @@ export const UpsertDTO = {
 	},
 }
 
+// prettier-ignore
 export const UpdateDTO = {
-	body: t.Object({
-		first_name: t.Optional(t.String()),
-		surname: t.Optional(t.String()),
-		contact_number: t.String(),
-		email: t.String(),
-		password: t.String(),
-		is_active: t.Boolean(),
+	body:				t.Object({
+		first_name:		t.Optional(t.String()),
+		surname:		t.Optional(t.String()),
+		contact_number:	t.String(),
+		email:			t.String(),
+		password:		t.String(),
+		is_active:		t.Boolean(),
 	}),
 	params: t.Object({ id: t.Integer() }),
 	transform({ params }: { params: Record<'id', string | number> }) {

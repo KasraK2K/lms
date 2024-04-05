@@ -45,4 +45,6 @@ package-lock.json
 .vscode/
 .idea/
 database/
+backup/
+
 bun.lockb

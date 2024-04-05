@@ -1,13 +1,13 @@
 // Bootstrap
 import '#bootstrap'
 // Dependencies
-import { Elysia } from 'elysia'
 import { swagger } from '@elysiajs/swagger'
+import { Elysia } from 'elysia'
 // Modules
-import routes from '#routes'
 import meditation from '#meditation'
+import routes from '#routes'
 
-const app = new Elysia()
+const app = new Elysia({ prefix: '/api' })
 	// Swagger
 	.use(
 		swagger({
@@ -19,9 +19,9 @@ const app = new Elysia()
 		})
 	)
 	// Routes
-	.onAfterHandle((context) => {
-		context.response = { result: context.response }
-	})
+	// .onAfterHandle((context) => {
+	// 	context.response = { result: context.response }
+	// })
 	.use(routes)
 	.listen(meditation.port)
 

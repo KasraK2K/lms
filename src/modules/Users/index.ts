@@ -1,11 +1,11 @@
 // Dependencies
 import { Elysia } from 'elysia'
 // Modules
+import { CountDTO, CreateDTO, DeleteDTO, FindAllDTO, FindOneDTO, PaginationDTO, UpdateDTO, UpsertDTO } from './types/schema.type'
 import controller from './user.controller'
-import { CountDTO, PaginationDTO, FindAllDTO, FindOneDTO, CreateDTO, UpsertDTO, UpdateDTO, DeleteDTO } from './types/schema.type'
 
 // prettier-ignore
-const routes = new Elysia()
+const routes = new Elysia({prefix: '/users'})
 	/* ---------------------------------- Rest ---------------------------------- */
 	.get('/count',						() => controller.count(),												CountDTO)
 	.get('/pagination/:page/:limit',	({ params: { page, limit } }) => controller.pagination(page, limit),	PaginationDTO)
