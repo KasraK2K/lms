@@ -30,7 +30,6 @@ x-backend-template: &backend-template
     depends_on:
         - postgres
         - mongo
-        - load_balancer
 
 services:${services}
     # -------------------------------- PostgreSQL -------------------------------- #
@@ -87,6 +86,7 @@ events {
 
 http {
     upstream backend {
+        least_conn;  # Use least connections algorithm
 ${Array(numOfCpus)
 	.fill(undefined)
 	.map((_, i) => `        server backend_${i + 1}:${backendPort};`)
