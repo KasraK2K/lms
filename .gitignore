@@ -49,3 +49,4 @@ backup/
 
 bun.lockb
 docker-compose.yml
+nginx.conf
