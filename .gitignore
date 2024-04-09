@@ -48,3 +48,4 @@ database/
 backup/
 
 bun.lockb
+docker-compose.yml
