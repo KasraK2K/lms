@@ -23,10 +23,11 @@ const yamlStr = `version: '3.9'
 x-backend-template: &backend-template
     image: 'oven/bun:latest'
     entrypoint: []
-    command: "/bin/sh -c 'bun install && bun run --watch src/index.ts'"
+    command: "/bin/sh -c 'bun run ${NODE_ENV === 'development' ? '--watch' : ''}  src/index.ts'"
     volumes: ['./:/home/bun/app']
     environment: 
         - NODE_ENV=${NODE_ENV}
+    restart: unless-stopped
     depends_on:
         - postgres
         - mongo
@@ -44,8 +45,7 @@ services:${services}
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=meditation
-        ports:
-            - 5432:5432
+            - POSTGRESQL_PORT_NUMBER=5432
         volumes:
             - ./backup/pg-data:/var/lib/postgresql/data
 
@@ -57,8 +57,7 @@ services:${services}
         environment:
             MONGO_INITDB_ROOT_USERNAME: admin
             MONGO_INITDB_ROOT_PASSWORD: admin
-        ports:
-            - 27017:27017
+        command: mongod --port 27017
         volumes:
             - ./backup/db:/data/db
             - ./backup/logs:/var/log/mongodb
@@ -69,7 +68,7 @@ services:${services}
         container_name: load_balancer
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf
-        restart: always
+        restart: unless-stopped
         ports:
             - "${loadBalancerPort}:80"
 `

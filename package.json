@@ -1,27 +1,28 @@
 {
-	"name": "elysia-boilerplate",
-	"version": "1.0.50",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"dev": "bun run --watch src/index.ts",
-		"lint": "eslint . --ext .ts",
-		"format": "prettier --write ."
-	},
-	"dependencies": {
-		"@elysiajs/swagger": "^0.8.5",
-		"elysia": "latest",
-		"lodash": "^4.17.21",
-		"mariadb": "^3.2.1",
-		"mongodb": "^6.1.0",
-		"mysql2": "^3.6.1",
-		"pg": "^8.11.3",
-		"pg-hstore": "^2.3.4",
-		"sequelize": "^6.33.0"
-	},
-	"devDependencies": {
-		"@types/lodash": "^4.14.202",
-		"bun-types": "latest",
-		"sequelize-cli": "^6.6.1"
-	},
-	"module": "src/index.js"
+  "name": "elysia-boilerplate",
+  "version": "1.0.50",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@elysiajs/swagger": "^1.0.3",
+    "elysia": "latest",
+    "lodash": "^4.17.21",
+    "mariadb": "^3.2.1",
+    "mongodb": "^6.1.0",
+    "mysql2": "^3.6.1",
+    "pg": "^8.11.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.33.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.202",
+    "bun-types": "latest",
+    "sequelize-cli": "^6.6.1"
+  },
+  "module": "src/index.js"
 }
