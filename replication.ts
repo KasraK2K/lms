@@ -5,19 +5,16 @@ import os from 'os'
 
 const { NODE_ENV = 'development' } = process.env
 const numOfCpus = os.cpus().length
-const selectedPort = NODE_ENV !== 'production' ? 3500 : 4000
+const backendPort = NODE_ENV !== 'production' ? 3500 : 4000
 const loadBalancerPort = 3000
 
 let services = ''
 
 for (let i = 0; i < numOfCpus; i++) {
-	const port = selectedPort + i
 	services += `
     backend_${i + 1}:
         <<: *backend-template
-        container_name: backend_${i + 1}
-        ports: 
-            - "${port}:${selectedPort}"\n`
+        container_name: backend_${i + 1}\n`
 }
 
 // Generate docker-compose.yml
@@ -92,7 +89,7 @@ http {
     upstream backend {
 ${Array(numOfCpus)
 	.fill(undefined)
-	.map((_, i) => `        server backend_${i + 1}:${selectedPort};`)
+	.map((_, i) => `        server backend_${i + 1}:${backendPort};`)
 	.join('\n')}
     }
 
