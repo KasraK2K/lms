@@ -1,19 +1,18 @@
-# Elysia with Bun runtime
+# Bun dockerize boilerplate
+This is boilerplate created by using Elysia framework and sequelize and it can serve by creating docker-compose.yml and nginx.conf depends on your system.
 
-## Getting Started
+In this project you can change configuration inside `meditation.config.ts`.
 
-To get started with this template, simply paste this command into your terminal:
+<br />
+
+Create `docker-compose.yml` and `nginx.conf` file depends on your system or serve:
+```bash
+NODE_ENV=production ./replication.ts
+```
+<br />
+
+If get execution error add execute access to `replication.ts`.
 
 ```bash
-bun create elysia ./elysia-example
+chmod +x ./replication.ts 
 ```
-
-## Development
-
-To start the development server run:
-
-```bash
-bun run dev
-```
-
-Open http://localhost:3000/ with your browser to see the result.

@@ -8,7 +8,7 @@ const numOfCpus = os.cpus().length
 const backendPort = NODE_ENV !== 'production' ? 3500 : 4000
 const loadBalancerPort = 3000
 
-let services = ''
+let services = `\n    # ---------------------------------- Backend --------------------------------- #`
 
 for (let i = 0; i < numOfCpus; i++) {
 	services += `
