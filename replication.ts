@@ -6,6 +6,7 @@ import os from 'os'
 const { NODE_ENV = 'development' } = process.env
 const numOfCpus = os.cpus().length
 const selectedPort = NODE_ENV !== 'production' ? 3500 : 4000
+const loadBalancerPort = 3000
 
 let services = ''
 
@@ -74,7 +75,7 @@ services:${services}
             - ./nginx.conf:/etc/nginx/nginx.conf
         restart: always
         ports:
-            - "3000:80"
+            - "${loadBalancerPort}:80"
 `
 
 // Write docker-compose.yml
