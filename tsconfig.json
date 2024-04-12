@@ -20,7 +20,8 @@
 			"#meditation": ["../meditation.config.ts"],		// Config file exist in meditation.config.ts
 			"#script": ["../meditation.script.ts"],			// Core script exist in meditation.script.ts
 			"#bootstrap": ["boot/index.ts"],				// Trigger boot
-			"#routes": ["./routes"]							// All routes
+			"#routes": ["./routes"],						// All routes
+			"#db": ["../prisma/client.ts"]					// Prisma Database
 		},
 		"types": ["bun-types"],
 		"esModuleInterop": true,

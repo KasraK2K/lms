@@ -1,5 +1,5 @@
 // Bootstrap
-import '#bootstrap'
+// import '#bootstrap'
 // Dependencies
 import { swagger } from '@elysiajs/swagger'
 import { Elysia } from 'elysia'

@@ -4,7 +4,7 @@ import fs from 'fs'
 import os from 'os'
 
 const { NODE_ENV = 'development' } = process.env
-const numOfCpus = os.cpus().length
+const numOfCpus = NODE_ENV === 'production' ? os.cpus().length : 1
 const backendPort = NODE_ENV !== 'production' ? 3500 : 4000
 const loadBalancerPort = 3000
 
@@ -23,7 +23,7 @@ const yamlStr = `version: '3.9'
 x-backend-template: &backend-template
     image: 'oven/bun:latest'
     entrypoint: []
-    command: "/bin/sh -c 'bun run ${NODE_ENV === 'development' ? '--watch' : ''}  src/index.ts'"
+    command: "/bin/sh -c 'bunx prisma generate && bun ${NODE_ENV === 'development' ? 'run --watch' : 'run'} src/index.ts'"
     volumes: ['./:/home/bun/app']
     environment: 
         - NODE_ENV=${NODE_ENV}
