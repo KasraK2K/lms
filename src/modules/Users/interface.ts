@@ -16,10 +16,10 @@ export interface IUser {
 	is_archive: boolean
 	is_block: boolean
 
-	created_at: string
-	updated_at: string
-	archived_at?: string
-	last_login_at?: string
+	created_at: Date
+	updated_at: Date
+	archived_at: Date | null
+	last_login_at: Date | null
 }
 
 export type IUserFillable = Pick<IUser, 'first_name' | 'surname' | 'contact_number' | 'email' | 'password' | 'is_active'>
@@ -30,3 +30,22 @@ export type IUserGuarded = Omit<
 >
 
 // export type IUserFindArgs = { email: string } | { id: number }
+
+export type IUserSelectFields =
+	| 'id'
+	| 'first_name'
+	| 'surname'
+	| 'contact_number'
+	| 'email'
+	| 'password'
+	| 'last_token'
+	| 'verify_token'
+	| 'role'
+	| 'is_active'
+	| 'is_verify'
+	| 'is_archive'
+	| 'is_block'
+	| 'created_at'
+	| 'updated_at'
+	| 'archived_at'
+	| 'last_login_at'
