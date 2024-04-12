@@ -11,10 +11,13 @@ const loadBalancerPort = 3000
 let services = `\n    # ---------------------------------- Backend --------------------------------- #`
 
 for (let i = 0; i < numOfCpus; i++) {
+	const port = backendPort + i
 	services += `
     backend_${i + 1}:
         <<: *backend-template
-        container_name: backend_${i + 1}\n`
+        container_name: backend_${i + 1}
+        ports:
+            - ${port}:${backendPort}\n`
 }
 
 // Generate docker-compose.yml
@@ -45,7 +48,9 @@ services:${services}
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=meditation
-            - POSTGRESQL_PORT_NUMBER=5432
+            # - POSTGRESQL_PORT_NUMBER=5432
+        ports:
+            - 5432:5432
         volumes:
             - ./backup/pg-data:/var/lib/postgresql/data
 
@@ -57,7 +62,9 @@ services:${services}
         environment:
             MONGO_INITDB_ROOT_USERNAME: admin
             MONGO_INITDB_ROOT_PASSWORD: admin
-        command: mongod --port 27017
+        # command: mongod --port 27017
+        ports:
+            - 27017:27017
         volumes:
             - ./backup/db:/data/db
             - ./backup/logs:/var/log/mongodb
@@ -85,7 +92,8 @@ events {
 
 http {
     upstream backend {
-        least_conn;  # Use least connections algorithm
+        ip_hash;    # Enable session affinity based on client IP
+        least_conn; # Use least connections algorithm
 ${Array(numOfCpus)
 	.fill(undefined)
 	.map((_, i) => `        server backend_${i + 1}:${backendPort};`)
@@ -98,6 +106,8 @@ ${Array(numOfCpus)
         location / {
             proxy_pass http://backend;
             proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -113,6 +123,7 @@ fs.writeFileSync('nginx.conf', nginxConf)
 exec('docker-compose up -d', (err: Error | null, stdout: string, stderr: string) => {
 	if (err) {
 		// node couldn't execute the command
+		console.error('err:', err)
 		return
 	}
 
