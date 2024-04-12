@@ -15,7 +15,7 @@ CREATE TABLE "User" (
     "is_block" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "archived_at" TIMESTAMPTZ NOT NULL,
+    "archived_at" TIMESTAMPTZ,
     "last_login_at" TIMESTAMPTZ,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
