@@ -33,6 +33,10 @@ class UserService extends Service {
 		return await repository.update(values, id)
 	}
 
+	public async upsert(args: IUserFillable): Promise<IUser> {
+		return await repository.upsert(args)
+	}
+
 	public async destroy(id: number): Promise<IUser> {
 		return repository.destroy(id)
 	}

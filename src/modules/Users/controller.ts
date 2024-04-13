@@ -29,6 +29,10 @@ class UserController extends Controller {
 		return service.update(values, id)
 	}
 
+	public upsert(args: IUserFillable): Promise<IUser> {
+		return service.upsert(args)
+	}
+
 	public destroy(id: number): Promise<IUser> {
 		return service.destroy(id)
 	}

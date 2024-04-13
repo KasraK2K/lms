@@ -85,7 +85,6 @@ export const CreateDTO = {
 // prettier-ignore
 export const UpsertDTO = {
 	body:				t.Object({
-		id:				t.Optional(t.Integer()),
 		first_name:		t.Optional(t.String()),
 		surname:		t.Optional(t.String()),
 		contact_number:	t.String(),
@@ -96,7 +95,7 @@ export const UpsertDTO = {
 	detail: {
 		summary: 'Upsert user',
 		tags: [SwaggerTags.USER],
-		description: "Upsert user has to update user if it has an ID or create a user if it doesn't have any ID",
+		description: "Upsert user depends of it's email",
 	},
 }
 

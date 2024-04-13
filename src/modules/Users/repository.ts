@@ -59,6 +59,10 @@ class UserRepository extends Repository {
 		}
 	}
 
+	public async upsert(args: IUserFillable): Promise<IUser> {
+		return db.user.upsert({ where: { email: args.email }, update: args, create: args })
+	}
+
 	public async destroy(id: number): Promise<IUser> {
 		try {
 			return await db.user.update({
