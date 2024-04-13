@@ -4,6 +4,7 @@
 import { swagger } from '@elysiajs/swagger'
 import { Elysia } from 'elysia'
 // Modules
+import db from '#db'
 import meditation from '#meditation'
 import routes from '#routes'
 
@@ -21,6 +22,9 @@ const app = new Elysia({ prefix: '/api' })
 	// Routes
 	.onAfterHandle((context) => {
 		context.response = { result: context.response }
+	})
+	.all('/health', async () => {
+		return await db.$queryRaw`SELECT 1`
 	})
 	.use(routes)
 	.listen(meditation.port)

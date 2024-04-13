@@ -17,7 +17,12 @@ for (let i = 0; i < numOfCpus; i++) {
         <<: *backend-template
         container_name: backend_${i + 1}
         ports:
-            - ${port}:${backendPort}\n`
+            - ${port}:${backendPort}
+        healthcheck:
+            test: ["CMD-SHELL", "curl --fail http://backend_${i + 1}:${backendPort}/api/health || exit 1"]
+            interval: 30s
+            timeout: 10s
+            retries: 3\n`
 }
 
 // Generate docker-compose.yml
@@ -53,6 +58,11 @@ services:${services}
             - 5432:5432
         volumes:
             - ./backup/pg-data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
     # ---------------------------------- MongoDB --------------------------------- #
     mongo:
@@ -68,10 +78,15 @@ services:${services}
         volumes:
             - ./backup/db:/data/db
             - ./backup/logs:/var/log/mongodb
+        healthcheck:
+            test: ["CMD-SHELL", "mongo --eval \'printjson(db.serverStatus())\'"]
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
     # ------------------------------- Load Balancer ------------------------------ #
     load_balancer:
-        image: nginx
+        image: nginx:latest
         container_name: load_balancer
         volumes:
             - ./nginx.conf:/etc/nginx/nginx.conf
@@ -95,6 +110,9 @@ events {
 }
 
 http {
+    gzip on; # Enable gzip compression
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
     upstream backend_http {
         least_conn;
 ${upstreamPoint}
