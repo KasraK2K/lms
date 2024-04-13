@@ -84,6 +84,10 @@ services:${services}
 fs.writeFileSync('docker-compose.yml', yamlStr)
 
 // Generate nginx.conf
+const upstreamPoint = `${Array(numOfCpus)
+	.fill(undefined)
+	.map((_, i) => `        server backend_${i + 1}:${backendPort};`)
+	.join('\n')}`
 const nginxConf = `worker_processes 1;
 
 events {
@@ -91,20 +95,32 @@ events {
 }
 
 http {
-    upstream backend {
-        ip_hash;    # Enable session affinity based on client IP
-        least_conn; # Use least connections algorithm
-${Array(numOfCpus)
-	.fill(undefined)
-	.map((_, i) => `        server backend_${i + 1}:${backendPort};`)
-	.join('\n')}
+    upstream backend_http {
+        least_conn;
+${upstreamPoint}
+    }
+
+    upstream backend_ws {
+        hash $request_uri consistent;
+${upstreamPoint}
     }
 
     server {
         listen 80;
 
         location / {
-            proxy_pass http://backend;
+            proxy_pass http://backend_http;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        location ~ ^/(.*)/ws/ {
+            proxy_pass http://backend_ws;
             proxy_http_version 1.1;
             proxy_set_header Upgrade $http_upgrade;
             proxy_set_header Connection "upgrade";

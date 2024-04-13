@@ -17,6 +17,6 @@ const routes = new Elysia({prefix: '/users'})
 	.patch('/:id',						({ params, body }) => controller.update(body as IUserGuarded, params.id as number),	UpdateDTO)
 	.delete('/:id',						({ params }) => controller.destroy(params.id),										DeleteDTO)
 	/* ------------------------------- Web Socket ------------------------------- */
-	.ws('/ws-create', { ...CreateDTO, async message(ws, message) { ws.send(await controller.create(message)) }})
+	.ws('/ws/create', { ...CreateDTO, async message(ws, message) { ws.send(await controller.create(message)) }})
 
 export default routes
