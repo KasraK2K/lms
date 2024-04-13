@@ -1,5 +1,6 @@
 // Modules
 import { Databases } from '#types/enums'
+import { FluentClientOptions } from '@fluent-org/logger'
 
 export interface IMeditationConfig {
 	name: string
@@ -9,6 +10,7 @@ export interface IMeditationConfig {
 		default_database: Databases
 		active_databases: Databases[]
 		database: IDatabaseConfig
+		fluentd: FluentClientOptions
 	}
 }
 

@@ -57,6 +57,13 @@ const meditationConfig: IMeditationConfig = {
 				url: 'amqp://localhost',
 			},
 		},
+		fluentd: {
+			socket: {
+				host: 'fluentd',
+				port: 24224,
+				timeout: 3000,
+			},
+		},
 	},
 }
 

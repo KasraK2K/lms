@@ -16,6 +16,9 @@ for (let i = 0; i < numOfCpus; i++) {
     backend_${i + 1}:
         <<: *backend-template
         container_name: backend_${i + 1}
+        environment: 
+            - NODE_ENV=${NODE_ENV}
+            - SERVICE_NUMBER=${i + 1}
         ports:
             - ${port}:${backendPort}
         healthcheck:
@@ -33,8 +36,6 @@ x-backend-template: &backend-template
     entrypoint: []
     command: "/bin/sh -c 'bunx prisma generate && bun ${NODE_ENV === 'development' ? 'run --watch' : 'run'} src/index.ts'"
     volumes: ['./:/home/bun/app']
-    environment: 
-        - NODE_ENV=${NODE_ENV}
     restart: unless-stopped
     depends_on:
         - postgres
@@ -93,6 +94,18 @@ services:${services}
         restart: unless-stopped
         ports:
             - "${loadBalancerPort}:80"
+
+    # --------------------------------- Fluentd --------------------------------- #
+    fluentd:
+        image: fluent/fluentd:edge-debian
+        container_name: fluentd
+        volumes:
+            - ./fluentd/conf:/fluentd/etc
+            - ./fluentd/logs:/fluentd/log
+        ports:
+            - "24224:24224"
+            - "24224:24224/udp"
+        restart: unless-stopped
 `
 
 // Write docker-compose.yml

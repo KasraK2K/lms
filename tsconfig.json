@@ -21,7 +21,8 @@
 			"#script": ["../meditation.script.ts"],			// Core script exist in meditation.script.ts
 			"#bootstrap": ["boot/index.ts"],				// Trigger boot
 			"#routes": ["./routes"],						// All routes
-			"#db": ["../prisma/client.ts"]					// Prisma Database
+			"#db": ["../prisma/client.ts"],					// Prisma Database
+			"#logger": ["helpers/fluentd.helper.ts"]		// FluentD Logger
 		},
 		"types": ["bun-types"],
 		"esModuleInterop": true,

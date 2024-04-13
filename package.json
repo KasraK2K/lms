@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@elysiajs/swagger": "^1.0.3",
+    "@fluent-org/logger": "^1.0.10",
     "@prisma/client": "5.12.1",
     "elysia": "latest",
     "lodash": "^4.17.21",
