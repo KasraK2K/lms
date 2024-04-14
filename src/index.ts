@@ -1,5 +1,5 @@
 // Bootstrap
-// import '#bootstrap'
+import '#bootstrap'
 // Dependencies
 import { swagger } from '@elysiajs/swagger'
 import { Elysia } from 'elysia'
@@ -7,6 +7,10 @@ import { Elysia } from 'elysia'
 import db from '#db'
 import meditation from '#meditation'
 import routes from '#routes'
+
+if (!db) console.log('DB not found')
+else if (!db.user) console.log('DB.USER not found')
+else if (!db.user.findFirst) console.log('DB.USER.Find_First not found')
 
 const app = new Elysia({ prefix: '/api' })
 	// Swagger

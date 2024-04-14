@@ -7,6 +7,7 @@ const { NODE_ENV = 'development' } = process.env
 const numOfCpus = NODE_ENV === 'production' ? os.cpus().length : 1
 const backendPort = NODE_ENV !== 'production' ? 3500 : 4000
 const loadBalancerPort = 3000
+const prismaCommands = 'bunx prisma generate && bunx prisma migrate deploy'
 
 let services = `\n    # ---------------------------------- Backend --------------------------------- #`
 
@@ -34,7 +35,7 @@ const yamlStr = `version: '3.9'
 x-backend-template: &backend-template
     image: 'oven/bun:latest'
     entrypoint: []
-    command: "/bin/sh -c 'bunx prisma generate && bun ${NODE_ENV === 'development' ? 'run --watch' : 'run'} src/index.ts'"
+    command: "/bin/sh -c '${prismaCommands} && bun ${NODE_ENV === 'development' ? 'run --watch' : 'run'} src/index.ts'"
     volumes: ['./:/home/bun/app']
     restart: unless-stopped
     depends_on:
