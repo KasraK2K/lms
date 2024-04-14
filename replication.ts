@@ -96,22 +96,6 @@ services:${services}
         ports:
             - "${loadBalancerPort}:80"
 
-    # ---------------------------------- Fluentd --------------------------------- #
-    fluentd:
-        build:
-            context: ./fluentd
-            dockerfile: Dockerfile
-        image: kasra-fluentd
-        container_name: fluentd
-        volumes:
-            - ./fluentd/conf:/fluentd/etc
-        ports:
-            - "24224:24224"
-            - "24224:24224/udp"
-        restart: unless-stopped
-        links:
-            - elasticsearch
-
     # ------------------------------- Elasticsearch ------------------------------ #
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
@@ -128,6 +112,35 @@ services:${services}
             - ./backup/elasticsearch:/usr/share/elasticsearch/data
         ports:
             - "9200:9200"
+
+    # ---------------------------------- Fluentd --------------------------------- #
+    fluentd:
+        build:
+            context: ./fluentd
+            dockerfile: Dockerfile
+        image: kasra-fluentd
+        container_name: fluentd
+        volumes:
+            - ./fluentd/conf:/fluentd/etc
+        ports:
+            - "24224:24224"
+            - "24224:24224/udp"
+        restart: unless-stopped
+        links:
+            - elasticsearch
+        depends_on:
+            - elasticsearch
+
+    # ---------------------------------- Kibana ---------------------------------- #
+    kibana:
+        image: docker.elastic.co/kibana/kibana:7.17.0
+        container_name: kibana
+        ports:
+            - "5601:5601"
+        environment:
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+        depends_on:
+            - elasticsearch
 `
 
 // Write docker-compose.yml
