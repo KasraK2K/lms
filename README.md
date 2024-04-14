@@ -1,5 +1,5 @@
-# Bun dockerize boilerplate
-This is boilerplate created by using Elysia framework and sequelize and it can serve by creating docker-compose.yml and nginx.conf depends on your system.
+# Dockerize Bun Elysia boilerplate
+This is boilerplate created by using Elysia framework and prisma and it can serve by creating docker-compose.yml and nginx.conf depends on your system.
 
 In this project you can change configuration inside `meditation.config.ts`.
 
