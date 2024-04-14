@@ -43,7 +43,7 @@ class UserRepository extends Repository {
 				err.name = 'Database'
 				throw err
 			}
-			logger('repository', { module: 'user', method: 'create', error })
+			logger('repository', { module: 'user', file: 'repository', method: 'create', error })
 			throw error
 		}
 	}
@@ -57,7 +57,7 @@ class UserRepository extends Repository {
 				err.name = 'Database'
 				throw err
 			}
-			logger('repository', { module: 'user', method: 'update', error })
+			logger('repository', { module: 'user', file: 'repository', method: 'update', error })
 			throw error
 		}
 	}
@@ -79,7 +79,7 @@ class UserRepository extends Repository {
 				err.name = 'Database'
 				throw err
 			}
-			logger('repository', { module: 'user', method: 'destroy', error })
+			logger('repository', { module: 'user', file: 'repository', method: 'destroy', error })
 			throw error
 		}
 	}

@@ -45,7 +45,7 @@ services:${services}
     # -------------------------------- PostgreSQL -------------------------------- #
     postgres:
         image: postgres:latest
-        container_name: bun-postgres-database
+        container_name: db-postgres-database
         restart: unless-stopped
         deploy:
             mode: replicated
@@ -58,7 +58,7 @@ services:${services}
         ports:
             - 5432:5432
         volumes:
-            - ./backup/pg-data:/var/lib/postgresql/data
+            - ./backup/postgresql/data:/var/lib/postgresql/data
         healthcheck:
             test: ["CMD-SHELL", "pg_isready -U postgres"]
             interval: 10s
@@ -68,7 +68,7 @@ services:${services}
     # ---------------------------------- MongoDB --------------------------------- #
     mongo:
         image: mongo:latest
-        container_name: bun-mongo-database
+        container_name: db-mongo-database
         restart: unless-stopped
         environment:
             MONGO_INITDB_ROOT_USERNAME: admin
@@ -77,8 +77,8 @@ services:${services}
         ports:
             - 27017:27017
         volumes:
-            - ./backup/db:/data/db
-            - ./backup/logs:/var/log/mongodb
+            - ./backup/mongodb/data:/data/db
+            - ./backup/mongodb/logs:/var/log/mongodb
         healthcheck:
             test: ["CMD-SHELL", "mongo --eval \'printjson(db.serverStatus())\'"]
             interval: 10s
@@ -95,17 +95,38 @@ services:${services}
         ports:
             - "${loadBalancerPort}:80"
 
-    # --------------------------------- Fluentd --------------------------------- #
+    # ---------------------------------- Fluentd --------------------------------- #
     fluentd:
-        image: fluent/fluentd:edge-debian
+        build:
+            context: ./fluentd
+            dockerfile: Dockerfile
+        image: kasra-fluentd
         container_name: fluentd
         volumes:
             - ./fluentd/conf:/fluentd/etc
-            - ./fluentd/logs:/fluentd/log
         ports:
             - "24224:24224"
             - "24224:24224/udp"
         restart: unless-stopped
+        links:
+            - elasticsearch
+
+    # ------------------------------- Elasticsearch ------------------------------ #
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+        container_name: elasticsearch
+        environment:
+            - discovery.type=single-node
+            - ES_JAVA_OPTS=-Xms2g -Xmx2g
+            - cluster.routing.allocation.disk.threshold_enabled=false
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - ./backup/elasticsearch:/usr/share/elasticsearch/data
+        ports:
+            - "9200:9200"
 `
 
 // Write docker-compose.yml
