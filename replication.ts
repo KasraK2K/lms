@@ -1,5 +1,5 @@
 #!/usr/bin/env bun
-import { exec } from 'child_process'
+import { spawn } from 'child_process'
 import fs from 'fs'
 import os from 'os'
 
@@ -201,15 +201,33 @@ ${upstreamPoint}
 // Write nginx.conf
 fs.writeFileSync('nginx.conf', nginxConf)
 
-// Run docker-compose
-exec('docker-compose up -d', (err: Error | null, stdout: string, stderr: string) => {
-	if (err) {
-		// node couldn't execute the command
-		console.error('err:', err)
-		return
-	}
+// Run Builder
+const builderProcess = spawn('./builder.sh')
+builderProcess.stdout.on('data', (data) => {
+	console.log(`🍏 ${data}`)
+})
+builderProcess.stderr.on('data', (data) => {
+	console.error(`🍓 ${data}`)
+})
+builderProcess.on('close', (code) => {
+	console.log(`🍀 Builder process exited with code ${code}`)
 
-	// the *entire* stdout and stderr (buffered)
-	console.log(`stdout: ${stdout}`)
-	console.log(`stderr: ${stderr}`)
+	if (code === 0) {
+		// If builder.sh exits successfully (code 0), run docker-compose
+		const dockerComposeProcess = spawn('docker-compose', ['up', '-d'])
+
+		dockerComposeProcess.stdout.on('data', (data) => {
+			console.log(`🥝 docker-compose ${data}`)
+		})
+
+		dockerComposeProcess.stderr.on('data', (data) => {
+			console.log(`📕 docker-compose ${data}`)
+		})
+
+		dockerComposeProcess.on('close', (code) => {
+			console.log(`🍀 docker-compose process exited with code ${code}`)
+		})
+	} else {
+		console.error('🧯 Builder process failed, docker-compose will not be executed.')
+	}
 })
