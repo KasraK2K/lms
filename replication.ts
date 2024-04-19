@@ -221,7 +221,7 @@ builderProcess.on('close', (code) => {
 		})
 
 		dockerComposeProcess.stderr.on('data', (data) => {
-			console.log(`📕 docker-compose ${data}`)
+			console.info(`docker-compose ${data}`)
 		})
 
 		dockerComposeProcess.on('close', (code) => {
