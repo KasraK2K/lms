@@ -204,28 +204,28 @@ fs.writeFileSync('nginx.conf', nginxConf)
 // Run Builder
 const builderProcess = spawn('./builder.sh')
 builderProcess.stdout.on('data', (data) => {
-	console.log(`🍏 ${data}`)
+	process.stdout.write(`🍏 ${data}`)
 })
 builderProcess.stderr.on('data', (data) => {
-	console.error(`🍓 ${data}`)
+	process.stdout.write(`🍓 ${data}`)
 })
 builderProcess.on('close', (code) => {
-	console.log(`🍀 Builder process exited with code ${code}`)
+	process.stdout.write(`🍀 Builder process exited with code ${code}`)
 
 	if (code === 0) {
 		// If builder.sh exits successfully (code 0), run docker-compose
 		const dockerComposeProcess = spawn('docker-compose', ['up', '-d'])
 
 		dockerComposeProcess.stdout.on('data', (data) => {
-			console.log(`🥝 docker-compose ${data}`)
+			process.stdout.write(`📦 ${data}`)
 		})
 
 		dockerComposeProcess.stderr.on('data', (data) => {
-			console.info(`docker-compose ${data}`)
+			process.stdout.write(`🐳${data}`)
 		})
 
 		dockerComposeProcess.on('close', (code) => {
-			console.log(`🍀 docker-compose process exited with code ${code}`)
+			console.log(`🎉 process exited with code ${code}`)
 		})
 	} else {
 		console.error('🧯 Builder process failed, docker-compose will not be executed.')
