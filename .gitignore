@@ -46,7 +46,7 @@ package-lock.json
 .idea/
 database/
 backup/
-fluentd/logs/
+fluentd/log/
 
 bun.lockb
 docker-compose.yml

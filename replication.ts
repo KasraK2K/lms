@@ -122,9 +122,11 @@ services:${services}
         container_name: fluentd
         volumes:
             - ./fluentd/conf:/fluentd/etc
+            - ./fluentd/log:/fluentd/log
         ports:
             - "24224:24224"
             - "24224:24224/udp"
+            - "8888:8888"
         restart: unless-stopped
         links:
             - elasticsearch
