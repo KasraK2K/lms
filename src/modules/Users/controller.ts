@@ -1,11 +1,13 @@
 // Modules
 import Controller from '#base/Controller'
+import logger from '#logger'
 import { IPagination } from '#src/types/interfaces'
 import { IUser, IUserFillable, IUserGuarded } from './interface'
 import service from './service'
 
 class UserController extends Controller {
 	public count(): Promise<number> {
+		logger('controller', { module: 'user', file: 'controller.ts', method: 'count', additional: { count: 12 } })
 		return service.count()
 	}
 
