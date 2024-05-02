@@ -8,5 +8,5 @@ if docker inspect "$DOCKER_IMAGE" &>/dev/null; then
     echo "Docker image $DOCKER_IMAGE exists."
 else
     echo "Docker image $DOCKER_IMAGE does not exist. Building..."
-    docker-compose build
+    docker compose build
 fi
