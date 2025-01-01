@@ -1,7 +1,7 @@
 // Default Modules
 // Modules
 import { Databases } from '#types/enums/general.enum'
-import { IMeditationConfig } from '#types/interfaces/config.interface'
+import '#types/interfaces'
 
 const { NODE_ENV = 'development' } = process.env
 

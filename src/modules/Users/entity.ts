@@ -1,5 +1,4 @@
 // Modules
-import { IUserSelectFields } from './interface'
 
 class User {
 	exclude(excludeFields: IUserSelectFields[]) {

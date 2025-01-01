@@ -1,24 +1,21 @@
 {
-  "name": "dockerize-bun-elysia",
-  "version": "1.0.50",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts",
-    "lint": "eslint . --ext .ts",
-    "format": "prettier --write ."
-  },
-  "dependencies": {
-    "@elysiajs/swagger": "^1.0.3",
-    "@fluent-org/logger": "^1.0.10",
-    "@prisma/client": "5.12.1",
-    "elysia": "latest",
-    "lodash": "^4.17.21",
-    "mongodb": "^6.1.0"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.202",
-    "bun-types": "latest",
-    "prisma": "^5.12.1"
-  },
-  "module": "src/index.js"
+	"name": "meditation-lms",
+	"description": "Meditation Learning Management System (LMS)",
+	"version": "1.0.50",
+	"scripts": {
+		"dev": "bun run --watch src/index.ts",
+		"lint": "eslint . --ext .ts",
+		"format": "prettier --write ."
+	},
+	"dependencies": {
+		"@elysiajs/swagger": "^1.2.0",
+		"@fluent-org/logger": "^1.0.10",
+		"@prisma/client": "^6.1.0",
+		"elysia": "^1.2.9"
+	},
+	"devDependencies": {
+		"bun-types": "^1.1.42",
+		"prisma": "^6.1.0"
+	},
+	"module": "src/index.ts"
 }

@@ -1,9 +1,7 @@
 // Dependencies
 // Modules
 import Service from '#base/Service'
-import { IPagination } from '#src/types/interfaces'
 import { hashGenerator } from '#src/utils'
-import { IUser, IUserFillable, IUserGuarded } from './interface'
 import repository from './repository'
 
 class UserService extends Service {
@@ -23,17 +21,20 @@ class UserService extends Service {
 		return repository.findOne(id)
 	}
 
-	public async create(values: IUserFillable): Promise<IUser> {
-		values.password = await hashGenerator(values.password)
-		return repository.create(values)
+	public async create(args: IUserFillable): Promise<IUser> {
+		args.password = await hashGenerator(args.password)
+		args.email = args.email.toLowerCase().trim()
+		return repository.create(args)
 	}
 
-	public async update(values: IUserGuarded, id: number): Promise<IUser> {
-		if ('password' in values) values.password = await hashGenerator(values.password)
-		return await repository.update(values, id)
+	public async update(args: IUserGuarded, id: number): Promise<IUser> {
+		if ('password' in args) args.password = await hashGenerator(args.password)
+		if ('email' in args) args.email = args.email.toLowerCase().trim()
+		return await repository.update(args, id)
 	}
 
 	public async upsert(args: IUserFillable): Promise<IUser> {
+		if ('email' in args) args.email = args.email.toLowerCase().trim()
 		return await repository.upsert(args)
 	}
 

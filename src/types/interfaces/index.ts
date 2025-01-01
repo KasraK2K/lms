@@ -1,2 +1,2 @@
-export * from './config.interface'
-export * from './general.interface'
+import './config.interface'
+import './general.interface'

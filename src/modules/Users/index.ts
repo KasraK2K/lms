@@ -1,22 +1,22 @@
 // Dependencies
 import { Elysia } from 'elysia'
 // Modules
-import controller from './controller'
-import { IUserGuarded } from './interface'
+import service from './service'
+import './interface'
 import { CountDTO, CreateDTO, DeleteDTO, FindAllDTO, FindOneDTO, PaginationDTO, UpdateDTO, UpsertDTO } from './schema'
 
 // prettier-ignore
 const routes = new Elysia({prefix: '/users'})
 	/* ---------------------------------- Rest ---------------------------------- */
-	.get('/count',						() => controller.count(),															CountDTO)
-	.get('/pagination/:page/:limit',	({ params: { page, limit } }) => controller.pagination(page, limit),				PaginationDTO)
-	.get('/',							() => controller.findAll(),															FindAllDTO)
-	.get('/:id',						({ params }) => controller.findOne(params.id),										FindOneDTO)
-	.post('/',							({ body }) => controller.create(body),												CreateDTO)
-	.put('/',							({ body }) => controller.upsert(body),												UpsertDTO)
-	.patch('/:id',						({ params, body }) => controller.update(body as IUserGuarded, params.id as number),	UpdateDTO)
-	.delete('/:id',						({ params }) => controller.destroy(params.id),										DeleteDTO)
+	.get('/count',						() => service.count(),																CountDTO)
+	.get('/pagination/:page/:limit',	({ params: { page, limit } }) => service.pagination(page, limit),					PaginationDTO)
+	.get('/',							() => service.findAll(),															FindAllDTO)
+	.get('/:id',						({ params }) => service.findOne(params.id),											FindOneDTO)
+	.post('/',							({ body }) => service.create(body),													CreateDTO)
+	.put('/',							({ body }) => service.upsert(body),													UpsertDTO)
+	.patch('/:id',						({ params, body }) => service.update(body as IUserGuarded, params.id as number),	UpdateDTO)
+	.delete('/:id',						({ params }) => service.destroy(params.id),											DeleteDTO)
 	/* ------------------------------- Web Socket ------------------------------- */
-	.ws('/ws/create', { ...CreateDTO, async message(ws, message) { ws.send(await controller.create(message)) }})
+	.ws('/ws/create', { ...CreateDTO, async message(ws, message) { ws.send(await service.create(message)) }})
 
 export default routes

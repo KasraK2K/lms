@@ -4,9 +4,7 @@ import { Prisma } from '@prisma/client'
 import Repository from '#base/Repository'
 import db from '#db'
 import logger from '#logger'
-import { IPagination } from '#types/interfaces'
 import User from './entity'
-import { IUser, IUserFillable, IUserGuarded } from './interface'
 
 class UserRepository extends Repository {
 	public async count() {
@@ -43,7 +41,7 @@ class UserRepository extends Repository {
 				err.name = 'Database'
 				throw err
 			}
-			logger('repository', { module: 'user', file: 'repository', method: 'create', error })
+			logger('repository', { module: 'user', file: 'repository.ts', method: 'create', error })
 			throw error
 		}
 	}
@@ -57,7 +55,7 @@ class UserRepository extends Repository {
 				err.name = 'Database'
 				throw err
 			}
-			logger('repository', { module: 'user', file: 'repository', method: 'update', error })
+			logger('repository', { module: 'user', file: 'repository.ts', method: 'update', error })
 			throw error
 		}
 	}
@@ -79,7 +77,7 @@ class UserRepository extends Repository {
 				err.name = 'Database'
 				throw err
 			}
-			logger('repository', { module: 'user', file: 'repository', method: 'destroy', error })
+			logger('repository', { module: 'user', file: 'repository.ts', method: 'destroy', error })
 			throw error
 		}
 	}
